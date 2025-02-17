@@ -22,6 +22,7 @@ started or need a quick refresher, you'll find what you need here.
     - [Mixin](lib/mixin.dart)
     - [Extension](lib/extension.dart)
     - [Class Modifier](lib/class_modifier)
+    - [Styling](lib/style.md)
 
 ## Introduction
 
