@@ -44,6 +44,7 @@ main() {
   const arr = [
     10,
     'hello',
+    [1, 2],
     (5, 10),
     (10, 5),
     (a: 10, b: 5),
@@ -52,5 +53,28 @@ main() {
   ];
   for (final obj in arr) {
     print(switchMe(obj));
+  }
+
+  // If-case examples: pattern matching in if statements without switch
+  print('\nIf-case examples:');
+
+  var data = {'user': ['Alice', 30]};
+  if (data case {'user': [String name, int age]}) {
+    print('Matched user: $name, age: $age');
+  }
+
+  var num = 42;
+  if (num case int n when n > 40) {
+    print('Number greater than 40: $n');
+  }
+
+  var point = (x: 10, y: 20);
+  if (point case (x: int x, y: int y)) {
+    print('Point: x=$x, y=$y');
+  }
+
+  var list = [1, 2, 3];
+  if (list case [int a, int b, int c]) {
+    print('List: $a, $b, $c');
   }
 }

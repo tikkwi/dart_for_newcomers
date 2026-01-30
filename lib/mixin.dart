@@ -1,46 +1,84 @@
-//generic
-mixin Walk {
-  void walk() => print("i'm walking");
+// Mixins in Dart
+//
+// Mixins are a way of reusing a class's code in multiple class hierarchies.
+// They provide a way to "mix in" functionality to a class without using inheritance.
+//
+// Key characteristics:
+// 1. Defined using the 'mixin' keyword.
+// 2. Cannot be instantiated directly.
+// 3. Can have methods and properties.
+// 4. Can use 'on' to restrict which classes can use the mixin.
+
+// ---------------------------------------------------------------------------
+// 1. Basic Mixin Usage
+// ---------------------------------------------------------------------------
+
+mixin Musical {
+  bool canPlayInstrument = true;
+
+  void entertain() {
+    if (canPlayInstrument) {
+      print('Playing music!');
+    } else {
+      print('Humming a tune...');
+    }
+  }
 }
 
-mixin Run {
-  void run() => print("i'm running");
+mixin Aggressive {
+  void attack() => print('Attacking!');
 }
 
-//allow specific classes
-mixin Dance on Artist {
-  void dance() => print("i'm dancing");
+class Performer {
+  void perform() => print('Performing...');
 }
 
-/*
-* there can also be mixin class with some restrictions
-* 1. Mixins can't have extends or with clauses, so neither can a mixin class.
-* 2. Classes can't have an on clause, so neither can a mixin class.
-* */
-
-abstract class Artist with Walk, Run {
-  void perform();
+// A class can mix in multiple mixins using 'with'.
+class Musician extends Performer with Musical {
+  void showTime() {
+    perform();
+    entertain();
+  }
 }
 
-class Singer extends Artist {
-  @override
-  void perform() => print("i'm singing");
+// ---------------------------------------------------------------------------
+// 2. Restricting Mixins with 'on'
+// ---------------------------------------------------------------------------
+// The 'on' keyword restricts which classes can use this mixin.
+// It also allows the mixin to call methods from that superclass.
+
+class Animal {
+  void breathe() => print('Breathing...');
 }
 
-class SingerDancer extends Singer with Dance {}
+// This mixin can ONLY be used on classes that extend Animal.
+mixin Flyer on Animal {
+  void fly() {
+    // We can call breathe() because we know 'this' is an Animal.
+    breathe(); 
+    print('Flying high!');
+  }
+}
 
-main() {
-  //
-  // dart's more concise way of this
-  // final singer = Singer();
-  // singer.perform();
-  // singer.run()
-  //
-  Singer()
-    ..perform()
-    ..run();
-  SingerDancer()
-    ..perform()
-    ..run()
-    ..dance();
+class Bird extends Animal with Flyer {}
+
+// Error: 'Car' does not extend 'Animal', so it cannot use 'Flyer'.
+// class Car with Flyer {} 
+
+// ---------------------------------------------------------------------------
+// 3. Mixin vs Interface vs Abstract Class
+// ---------------------------------------------------------------------------
+// - Abstract Class: "Is-a" relationship. Use for shared base logic in a hierarchy.
+// - Interface: "Can-do" relationship (Contract). Use for defining API boundaries.
+// - Mixin: "Has-a" capability. Use for sharing code across unrelated classes.
+
+void main() {
+  print('--- Basic Mixin ---');
+  var musician = Musician();
+  musician.showTime();
+  // musician.entertain(); // Available because of 'with Musical'
+
+  print('\n--- Restricted Mixin ---');
+  var bird = Bird();
+  bird.fly(); // Calls breathe() internally
 }

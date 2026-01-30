@@ -18,8 +18,8 @@ started or need a quick refresher, you'll find what you need here.
 - Getting started to dart
     - [Constructor](lib/constructor.dart)
     - [Enum](lib/enum.dart)
-    - [Switch](lib/switch.dart)
-    - [Mixin](lib/mixin.dart)
+    - [Switch](lib/case.dart)
+    - [Mixin](lib/interop/mixin.dart)
     - [Extension](lib/extension.dart)
     - [Class Modifier](lib/class_modifier)
     - [Styling](lib/style.md)
